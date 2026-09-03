@@ -1,0 +1,18 @@
+[project]
+name = "fletes-oriente"
+version = "1.0.0"
+description = "Cotizador Camion 350 para Oriente de Venezuela"
+authors = [
+    {name = "Fletes Oriente", email = "dev@fletesoriente.com"}
+]
+requires-python = ">=3.9"
+dependencies = [
+    "flet>=0.86.0",
+    "fpdf2>=2.8.0",
+    "python-docx>=1.2.0",
+]
+
+[tool.flet]
+app-name = "Fletes Oriente"
+org = "com.fletes.oriente"
+module-name = "main"
