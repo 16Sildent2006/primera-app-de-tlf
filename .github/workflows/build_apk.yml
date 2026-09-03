@@ -19,12 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Configurar Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.24.x'
-
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
@@ -32,15 +26,19 @@ jobs:
 
       - name: Instalar Flet y Dependencias
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install flet[all] fpdf2 python-docx
 
       - name: Compilar APK
         run: |
-          flet build apk --project "Fletes Oriente" --description "Cotizador Camión 350 para Oriente" --org "com.fletes.oriente"
+          yes | flet build apk -y --project "Fletes Oriente" --description "Cotizador Camion 350 para Oriente" --org "com.fletes.oriente"
 
       - name: Subir APK como Artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: Fletes_Oriente_Camion350.apk
-          path: build/apk/*.apk
+          name: Fletes_Oriente_Camion350
+          path: |
+            build/apk/*.apk
+            dist/*.apk
+            build/**/*.apk
+          if-no-files-found: warn
