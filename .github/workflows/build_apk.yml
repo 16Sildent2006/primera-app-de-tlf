@@ -13,16 +13,16 @@ jobs:
       - name: Descargar Código
         uses: actions/checkout@v4
 
-      - name: Configurar Python 3.11
+      - name: Configurar Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Instalar dependencias de Flet
         run: python -m pip install --upgrade pip && python -m pip install "flet[cli]==0.86.5" fpdf2 python-docx
 
       - name: Compilar APK
-        run: flet build apk --yes --python-version 3.11 --build-number ${{ github.run_number }} --output build/apk
+        run: flet build apk --yes --python-version 3.12 --build-number ${{ github.run_number }} --output build/apk
 
       - name: Buscar APK generado
         if: always()
