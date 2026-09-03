@@ -24,11 +24,12 @@ jobs:
         with:
           channel: 'stable'
           cache: true
+        id: flutter
 
-      - name: Aceptar licencias de Android
+      - name: Aceptar licencias de Android SDK
         run: |
           yes | flutter doctor --android-licenses || true
-          flutter doctor
+          flutter doctor -v
 
       - name: Configurar Python
         uses: actions/setup-python@v5
@@ -42,10 +43,21 @@ jobs:
 
       - name: Compilar APK
         run: |
-          flet build apk --project "Fletes Oriente" --description "Cotizador Camion 350 para Oriente" --org "com.fletes.oriente" --module-name main
+          FLUTTER_DIR=$(dirname $(dirname $(which flutter)))
+          echo "Usando Flutter en: $FLUTTER_DIR"
+          flet build apk \
+            --flutter-dir "$FLUTTER_DIR" \
+            --project "Fletes Oriente" \
+            --description "Cotizador Camion 350 para Oriente" \
+            --org "com.fletes.oriente" \
+            --module-name main
+        env:
+          CI: "true"
 
       - name: Buscar APK generado
-        run: find . -name "*.apk" 2>/dev/null || echo "No se encontro el APK"
+        run: |
+          echo "=== Buscando archivos APK ==="
+          find . -name "*.apk" 2>/dev/null
 
       - name: Subir APK como Artefacto
         uses: actions/upload-artifact@v4
