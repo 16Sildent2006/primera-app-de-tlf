@@ -25,8 +25,17 @@ jobs:
       - name: Instalar dependencias de Flet
         run: python -m pip install --upgrade pip && python -m pip install "flet[cli]==0.86.5" fpdf2 python-docx
 
+      - name: Configurar Flutter y licencias Android
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.44.8"
+          channel: stable
+
+      - name: Aceptar licencias Android
+        run: yes | flutter doctor --android-licenses
+
       - name: Compilar APK
-        run: flet build apk --yes --python-version 3.12 --build-number ${{ github.run_number }} --output build/apk
+        run: flet build apk --yes --verbose --python-version 3.12 --build-number ${{ github.run_number }} --output build/apk
 
       - name: Buscar APK generado
         if: always()
