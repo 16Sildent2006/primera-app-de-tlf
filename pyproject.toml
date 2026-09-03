@@ -5,7 +5,7 @@ description = "Cotizador Camion 350 para Oriente de Venezuela"
 authors = [
     {name = "Fletes Oriente", email = "dev@fletesoriente.com"}
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "flet>=0.86.0",
     "fpdf2>=2.8.0",
