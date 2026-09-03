@@ -15,7 +15,7 @@ jobs:
 
       - name: Compilar APK con Flet Build Action
         id: build
-        uses: flet-dev/flet-build-action@main
+        uses: flet-dev/flet-build-action@v1
         with:
           target: apk
           runner-python-version: "3.11"
@@ -28,8 +28,9 @@ jobs:
         run: find . -name "*.apk" 2>/dev/null || echo "No se encontro APK todavia"
 
       - name: Subir APK como Artefacto
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Fletes_Oriente_Camion350
-          path: ${{ steps.build.outputs.archive-output }}
-          if-no-files-found: warn
+          path: ${{ steps.build.outputs.archive-path }}
+          archive: false
+          if-no-files-found: error
