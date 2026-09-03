@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compilados locales C++ de prueba
+test_cpp.exe
+*.o
+*.obj
+
+# Archivos temporales de cotizaciones
+cotizaciones/~*
+cotizaciones/*.tmp
+
+# Entornos virtuales
+venv/
+.env/
+env/
+
+# VS Code local
+.vscode/

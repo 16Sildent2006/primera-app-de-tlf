@@ -1,0 +1,46 @@
+name: Compilar APK Android (Fletes Oriente)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.24.x'
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Flet y Dependencias
+        run: |
+          pip install --upgrade pip
+          pip install flet[all] fpdf2 python-docx
+
+      - name: Compilar APK
+        run: |
+          flet build apk --project "Fletes Oriente" --description "Cotizador Camión 350 para Oriente" --org "com.fletes.oriente"
+
+      - name: Subir APK como Artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fletes_Oriente_Camion350.apk
+          path: build/apk/*.apk
