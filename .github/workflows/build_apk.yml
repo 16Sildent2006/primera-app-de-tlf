@@ -25,6 +25,11 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Aceptar licencias de Android
+        run: |
+          yes | flutter doctor --android-licenses || true
+          flutter doctor
+
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
@@ -37,7 +42,10 @@ jobs:
 
       - name: Compilar APK
         run: |
-          printf 'y\n' | flet build apk --project "Fletes Oriente" --description "Cotizador Camion 350 para Oriente" --org "com.fletes.oriente"
+          flet build apk --project "Fletes Oriente" --description "Cotizador Camion 350 para Oriente" --org "com.fletes.oriente" --module-name main
+
+      - name: Buscar APK generado
+        run: find . -name "*.apk" 2>/dev/null || echo "No se encontro el APK"
 
       - name: Subir APK como Artefacto
         uses: actions/upload-artifact@v4
